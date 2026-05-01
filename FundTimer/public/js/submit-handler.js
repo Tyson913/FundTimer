@@ -71,10 +71,10 @@ const currencyCodes = {
 };
 
 const savingsLabels = {
-    daily: "days",
-    weekly: "weeks",
-    monthly: "months",
-    yearly: "years"
+    Daily: "days",
+    Weekly: "weeks",
+    Monthly: "months",
+    Yearly: "years"
 };
 
 let latestBreakdown = null;
@@ -128,6 +128,7 @@ function populateCalculationBreakdown(breakdown) {
     const itemCurrencyCode = currencyCodes[breakdown.itemCurrency];
     const savingsCurrencyCode = currencyCodes[breakdown.savingsCurrency];
     const periodLabel = savingsLabels[breakdown.savingsFrequency];
+    const displayPeriodLabel = breakdown.fullPeriods === 1 ? periodLabel.slice(0, -1) : periodLabel;
     const sameCurrency = breakdown.itemCurrency === breakdown.savingsCurrency;
     const hasRemaining = breakdown.remainingAmount > 0;
 
@@ -146,10 +147,10 @@ function populateCalculationBreakdown(breakdown) {
     calcSavingsFormula.textContent = `Each ${breakdown.savingsFrequency} contribution is subtracted from the goal total in ${savingsCurrencyCode}.`;
 
     calcTimeline.textContent = hasRemaining
-        ? `${breakdown.fullPeriods} ${periodLabel} + ${formatCurrency(breakdown.remainingAmount, breakdown.savingsCurrency)}`
-        : `${breakdown.fullPeriods} ${periodLabel}`;
+        ? `${breakdown.fullPeriods} ${displayPeriodLabel} + ${formatCurrency(breakdown.remainingAmount, breakdown.savingsCurrency)}`
+        : `${breakdown.fullPeriods} ${displayPeriodLabel}`;
 
-    calcTimelineFormula.textContent = `${formatCurrency(breakdown.convertedTotal, breakdown.savingsCurrency)} / ${formatCurrency(breakdown.savingsAmount, breakdown.savingsCurrency)} = ${formatNumber(breakdown.rawPeriods)} periods. FundTimer shows ${breakdown.fullPeriods} full ${periodLabel}${hasRemaining ? `, then ${formatCurrency(breakdown.remainingAmount, breakdown.savingsCurrency)} extra needed.` : "."}`;
+    calcTimelineFormula.textContent = `${formatCurrency(breakdown.convertedTotal, breakdown.savingsCurrency)} / ${formatCurrency(breakdown.savingsAmount, breakdown.savingsCurrency)} = ${formatNumber(breakdown.rawPeriods)} periods. FundTimer shows ${breakdown.fullPeriods} full ${displayPeriodLabel}${hasRemaining ? `, then ${formatCurrency(breakdown.remainingAmount, breakdown.savingsCurrency)} extra needed.` : "."}`;
 }
 
 seeCalcBtn.addEventListener('click', () => {

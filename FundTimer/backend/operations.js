@@ -157,10 +157,10 @@ const currencySymbols = {
 };
 
 const savfeqlabels = {
-    daily: "days",
-    weekly: "weeks",
-    monthly: "months",
-    yearly: "years"
+    Daily: "days",
+    Weekly: "weeks",
+    Monthly: "months",
+    Yearly: "years"
 }
 
 function fillHTMLResCon(prodname, prodnumber, prodquan, unitprice, usavfreque, usersaveam, est, rmn, itemcurr, savcurr){
@@ -170,14 +170,29 @@ function fillHTMLResCon(prodname, prodnumber, prodquan, unitprice, usavfreque, u
     sf.textContent = usavfreque
     sa.textContent = `${currencySymbols[savcurr]}${usersaveam}`
 
-    const estm1 = `${est} ${savfeqlabels[usavfreque]}.`
-    const estm2 = `${est} ${savfeqlabels[usavfreque]} and extra ${currencySymbols[savcurr]}${rmn} needed.`
+    const label = savfeqlabels[usavfreque];
 
-    if (rmn == 0) {
-        estv.textContent = estm1
+    const estm1 = `${est} ${label}`
+    const estm1b = `${est} ${label.slice(0, -1)}.`
+    const estm2b = `${est} ${label.slice(0, -1)} and extra ${currencySymbols[savcurr]}${rmn} needed.`
+    const estm2 = `${est} ${label} and extra ${currencySymbols[savcurr]}${rmn} needed.`
+    
+
+    if (est == 1) {
+        if (rmn == 0) {
+            estv.textContent = estm1b
+        }
+        else {
+            estv.textContent = estm2b
+        }    
     }
     else {
-        estv.textContent = estm2
+        if (rmn == 0) {
+            estv.textContent = estm1
+        }
+        else {
+            estv.textContent = estm2
+        }  
     }
 }
 

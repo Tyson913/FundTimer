@@ -49,15 +49,15 @@
             <div class="form-grid">
                 <div class="field">
                     <label for="in">Product Name</label>
-                    <input type="text" id="in" placeholder="Enter product name">
+                    <input type="text" id="in" placeholder="Enter product name" required>
                 </div>
                 <div class="field">
                     <label for="iq">Quantity</label>
-                    <input type="number" id="iq" placeholder="1" min="1">
+                    <input type="number" id="iq" placeholder="1" min="1" required>
                 </div>
                 <div class="field">
                     <label for="priceCurr">Price Currency</label>
-                    <select id="priceCurr">
+                    <select id="priceCurr" required>
                         <option value="php">Philippine Peso (PHP - &#8369;)</option>
                         <option value="usd">US Dollar (USD - $)</option>
                         <option value="eur">Euro (EUR - &#8364;)</option>
@@ -68,11 +68,11 @@
                 </div>
                 <div class="field">
                     <label for="iup">Unit Price</label>
-                    <input type="number" id="iup" placeholder="0.00" min="0" step="0.01">
+                    <input type="number" id="iup" placeholder="0.00" min="0" step="0.01" required>
                 </div>
                 <div class="field">
                     <label for="savingsFreq">Savings Frequency</label>
-                    <select id="savingsFreq">
+                    <select id="savingsFreq" required>
                         <option value="Daily">Daily</option>
                         <option value="Weekly">Weekly</option>
                         <option value="Monthly">Monthly</option>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="field">
                     <label for="savingsCurr">Savings Currency</label>
-                    <select id="savingsCurr">
+                    <select id="savingsCurr" required>
                         <option value="php">Philippine Peso (PHP - &#8369;)</option>
                         <option value="usd">US Dollar (USD - $)</option>
                         <option value="eur">Euro (EUR - &#8364;)</option>
@@ -92,8 +92,12 @@
                 </div>
                 <div class="field">
                     <label for="savingsAmount">Savings Amount</label>
-                    <input type="number" id="savingsAmount" placeholder="0.00" min="0" step="0.01">
+                    <input type="number" id="savingsAmount" placeholder="0.00" min="0" step="0.01" required>
                 </div>
+            </div>
+
+            <div class="form-error" id="formError" role="alert" aria-live="polite" hidden>
+                Please fill out the form before estimating time.
             </div>
 
             <div class="actions-row">

@@ -15,6 +15,7 @@ const calcSavings = document.getElementById('calcSavings');
 const calcSavingsFormula = document.getElementById('calcSavingsFormula');
 const calcTimeline = document.getElementById('calcTimeline');
 const calcTimelineFormula = document.getElementById('calcTimelineFormula');
+const formError = document.getElementById('formError');
 
 const conversionRates = {
     php: {
@@ -78,6 +79,16 @@ const savingsLabels = {
 };
 
 let latestBreakdown = null;
+
+function showFormError(message) {
+    formError.textContent = message;
+    formError.hidden = false;
+}
+
+function clearFormError() {
+    formError.hidden = true;
+    formError.textContent = "";
+}
 
 function formatCurrency(amount, currency) {
     return new Intl.NumberFormat("en-US", {
@@ -165,27 +176,43 @@ seeCalcBtn.addEventListener('click', () => {
     calcToggleText.textContent = shouldOpen ? "Hide calculations" : "See calculations";
 });
 
+[itemName, itemQuan, itemUnitPrice, userSavingsAmount].forEach((field) => {
+    field.addEventListener('input', clearFormError);
+});
+
 submitBtn.addEventListener('click', async (e) => {
     e.preventDefault();
 
-    const nameValue = itemName.value;
+    const nameValue = itemName.value.trim();
+    const quanRawValue = itemQuan.value.trim();
+    const unitPriceRawValue = itemUnitPrice.value.trim();
+    const savAmountRawValue = userSavingsAmount.value.trim();
+    const hasNoInputValues = [nameValue, quanRawValue, unitPriceRawValue, savAmountRawValue].every((value) => value === "");
 
-    if (!nameValue) {
-        alert("Please enter a product name first!");
+    if (hasNoInputValues) {
+        showFormError("Please fill out the form before estimating time.");
+        itemName.focus();
         return;
     }
 
-    const quanValue = Number(itemQuan.value);
+    if (!nameValue || !quanRawValue || !unitPriceRawValue || !savAmountRawValue) {
+        showFormError("Please complete product name, quantity, unit price, and savings amount.");
+        return;
+    }
+
+    const quanValue = Number(quanRawValue);
     const priceCurrValue = itemPriceCurr.value;
-    const unitPriceValue = Number(itemUnitPrice.value);
+    const unitPriceValue = Number(unitPriceRawValue);
     const savFreqValue = userSavingsFreq.value;
     const savCurrValue = userSavingsCurr.value;
-    const savAmountValue = Number(userSavingsAmount.value);
+    const savAmountValue = Number(savAmountRawValue);
 
     if (quanValue <= 0 || unitPriceValue <= 0 || savAmountValue <= 0) {
-        alert("Please enter a quantity, unit price, and savings amount greater than zero.");
+        showFormError("Please enter a quantity, unit price, and savings amount greater than zero.");
         return;
     }
+
+    clearFormError();
 
     latestBreakdown = buildCalculationBreakdown(quanValue, priceCurrValue, unitPriceValue, savFreqValue, savCurrValue, savAmountValue);
     populateCalculationBreakdown(latestBreakdown);

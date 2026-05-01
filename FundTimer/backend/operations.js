@@ -1,17 +1,3 @@
-/*
-Functions:
-
-ADD DATA
-CALCULATE ESTIMATED TIME TO PURCHASE (BASED ON USER CURRENCY FREQUENCY)
-RETRIEVE DATA
-FILL HTML RESULT CONTAINER(RETRIEVED DATA)
-
-
-FUNCTION TO ADD:
-
-HISTORY
-
-*/
 import { db } from "./firebase.js";
 import { ref, get, query, limitToLast, update, child, set, serverTimestamp, orderByKey, orderByChild}
 from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
@@ -134,7 +120,7 @@ async function CalculateETP(itemName, itemQuan, itemPriceCurr, itemUnitPrice, us
 
 
 async function getData(){
-    // Change this line to use orderByChild('createdAt')
+
     const q = query(ref(db, 'products'), orderByChild('createdAt'), limitToLast(1));
     const snapshot = await get(q);
 

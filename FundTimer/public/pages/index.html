@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FundTimer | Save Smarter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="brand-row">
+            <span class="brand-mark">F</span>
+            <div>
+                <p class="eyebrow">FundTimer</p>
+                <p class="brand-subtitle">Minimal savings planner</p>
+            </div>
+        </div>
+        <div class="theme-row">
+            <span class="material-symbols-outlined" id="lightIcon">light_mode</span>
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle-checkbox" aria-label="Toggle dark mode">
+                <span class="slider"></span>
+            </label>
+            <span class="material-symbols-outlined" id="darkIcon">dark_mode</span>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <section class="hero-card">
+            <p class="eyebrow">Plan your next purchase</p>
+            <h1>Save smarter with every contribution.</h1>
+            <p class="hero-copy">Estimate how long it will take to reach the goal for any product using recurring savings in your preferred currency.</p>
+        </section>
+
+        <section class="calculator-card">
+            <div class="section-header">
+                <div>
+                    <p class="eyebrow">Calculator</p>
+                    <h2>Refine your savings plan</h2>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="field">
+                    <label for="in">Product Name</label>
+                    <input type="text" id="in" placeholder="Enter product name">
+                </div>
+                <div class="field">
+                    <label for="iq">Quantity</label>
+                    <input type="number" id="iq" placeholder="1" min="1">
+                </div>
+                <div class="field">
+                    <label for="priceCurr">Price Currency</label>
+                    <select id="priceCurr">
+                        <option value="php">Philippine Peso (PHP - &#8369;)</option>
+                        <option value="usd">US Dollar (USD - $)</option>
+                        <option value="eur">Euro (EUR - &#8364;)</option>
+                        <option value="cny">Chinese Yuan (CNY - &#165;)</option>
+                        <option value="jpy">Japanese Yen (JPY - &#165;)</option>
+                        <option value="gbp">British Pound (GBP - &#163;)</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="iup">Unit Price</label>
+                    <input type="number" id="iup" placeholder="0.00" min="0" step="0.01">
+                </div>
+                <div class="field">
+                    <label for="savingsFreq">Savings Frequency</label>
+                    <select id="savingsFreq">
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Yearly">Yearly</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="savingsCurr">Savings Currency</label>
+                    <select id="savingsCurr">
+                        <option value="php">Philippine Peso (PHP - &#8369;)</option>
+                        <option value="usd">US Dollar (USD - $)</option>
+                        <option value="eur">Euro (EUR - &#8364;)</option>
+                        <option value="cny">Chinese Yuan (CNY - &#165;)</option>
+                        <option value="jpy">Japanese Yen (JPY - &#165;)</option>
+                        <option value="gbp">British Pound (GBP - &#163;)</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="savingsAmount">Savings Amount</label>
+                    <input type="number" id="savingsAmount" placeholder="0.00" min="0" step="0.01">
+                </div>
+            </div>
+
+            <div class="actions-row">
+                <button type="button" id="submitbttn">
+                    <span class="material-symbols-outlined" aria-hidden="true">timer</span>
+                    <span>Estimate time</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="result-card resultBox" id="resultbox" style="display: none;">
+            <div class="result-head">
+                <div>
+                    <p class="eyebrow">Projected outcome</p>
+                    <h2 id="prodn"></h2>
+                </div>
+            </div>
+
+            <div class="result-grid">
+                <div class="result-item">
+                    <span>Quantity</span>
+                    <strong id="pq"></strong>
+                </div>
+                <div class="result-item">
+                    <span>Unit Price</span>
+                    <strong id="up"></strong>
+                </div>
+                <div class="result-item">
+                    <span>Savings Frequency</span>
+                    <strong id="sf"></strong>
+                </div>
+                <div class="result-item">
+                    <span>Savings Amount</span>
+                    <strong id="sa"></strong>
+                </div>
+                <div class="result-item result-item--wide">
+                    <span>Estimated Time</span>
+                    <strong id="est"></strong>
+                </div>
+                <div class="actions-row">
+                    <button type="button" class="ghost-btn" id="seeCalc" aria-expanded="false" aria-controls="calcBreakdown">
+                        <span class="material-symbols-outlined" aria-hidden="true" id="calcToggleIcon">calculate</span>
+                        <span id="calcToggleText">See calculations</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="calc-breakdown" id="calcBreakdown" hidden>
+                <div class="calc-breakdown__header">
+                    <div>
+                        <p class="eyebrow">Calculation details</p>
+                        <h2>How the estimate was made</h2>
+                    </div>
+                </div>
+
+                <div class="calc-steps">
+                    <div class="calc-step">
+                        <span class="calc-step__label">Goal total</span>
+                        <strong id="calcGoal"></strong>
+                        <p id="calcGoalFormula"></p>
+                    </div>
+                    <div class="calc-step">
+                        <span class="calc-step__label">Currency conversion</span>
+                        <strong id="calcConversion"></strong>
+                        <p id="calcConversionFormula"></p>
+                    </div>
+                    <div class="calc-step">
+                        <span class="calc-step__label">Savings pace</span>
+                        <strong id="calcSavings"></strong>
+                        <p id="calcSavingsFormula"></p>
+                    </div>
+                    <div class="calc-step calc-step--wide">
+                        <span class="calc-step__label">Final estimate</span>
+                        <strong id="calcTimeline"></strong>
+                        <p id="calcTimelineFormula"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="../js/getValues.js"></script>
+    <script type="module" src="../js/submit-handler.js"></script>
+    <script type="module" src="../../backend/firebase.js"></script>
+    <script type="module" src="../../backend/operations.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

@@ -195,25 +195,25 @@ submitBtn.addEventListener('click', async (e) => {
     await CalculateETP(nameValue, quanValue, priceCurrValue, unitPriceValue, savFreqValue, savCurrValue, savAmountValue);
     await loadData();
 
-    // Show the result box with the layout defined in CSS.
+
     resBox.style.display = 'grid';
-    // ... after loadData() ...
+
     const scrollContainer = document.getElementById("resultbox");
 
-    // 1. Reset scroll position to top first
+
     let windowAutoScroll = setInterval(() => {
-        // Get the position of the box relative to the viewport
+
         const rect = scrollContainer.getBoundingClientRect();
 
-        // If the top of the box is already in view (e.g., 100px from top), stop
+
         if (rect.top <= 150) {
             clearInterval(windowAutoScroll);
         } else {
-            window.scrollBy(0, 10); // Scroll the whole page down by 5px
+            window.scrollBy(0, 10); 
         }
-    }, 16); // 60fps
+    }, 16); 
 
-    // Stop if the user interacts
+
     const stopWindowScroll = () => clearInterval(windowAutoScroll);
     window.addEventListener('wheel', stopWindowScroll, { once: true });
     window.addEventListener('touchstart', stopWindowScroll, { once: true });// A 100ms delay is usually enough for the browser to render the new list
